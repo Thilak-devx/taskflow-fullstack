@@ -273,6 +273,26 @@ npm run dev
 - `npm run build` - create the production build
 - `npm run preview` - preview the production build locally
 
+## Docker support
+
+Docker support is included for the full stack:
+
+- [backend/Dockerfile](C:/Users/2026/Desktop/taskflow-project/backend/Dockerfile)
+- [frontend/Dockerfile](C:/Users/2026/Desktop/taskflow-project/frontend/Dockerfile)
+- [docker-compose.yml](C:/Users/2026/Desktop/taskflow-project/docker-compose.yml)
+
+Run the complete stack with Docker Compose:
+
+```bash
+docker compose up --build
+```
+
+Containerized local URLs:
+
+- Frontend: [http://localhost:5173](http://localhost:5173)
+- Backend: [http://localhost:5000](http://localhost:5000)
+- Swagger docs: [http://localhost:5000/api/docs](http://localhost:5000/api/docs)
+
 ## Deployment Architecture
 
 TaskFlow is deployed as a separated full-stack system:
