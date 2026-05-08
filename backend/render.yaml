@@ -21,6 +21,8 @@ services:
         sync: false
       - key: CORS_ORIGIN_REGEX
         sync: false
+      - key: ALLOW_VERCEL_PREVIEW_ORIGINS
+        value: true
       - key: MONGO_URI
         sync: false
       - key: JWT_SECRET

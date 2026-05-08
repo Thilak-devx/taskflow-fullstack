@@ -28,8 +28,12 @@ const env = {
   mongoUri: rawDatabaseUrl,
   jwtSecret: process.env.JWT_SECRET || "change-me-in-production",
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || "7d",
-  clientUrls: parseOrigins([process.env.CLIENT_URL, process.env.CLIENT_URLS].filter(Boolean).join(",")),
+  clientUrls: parseOrigins(
+    [process.env.CLIENT_URL, process.env.CLIENT_URLS].filter(Boolean).join(",") ||
+      "http://localhost:5173,http://127.0.0.1:5173"
+  ),
   corsOriginRegexes: parseRegexList(process.env.CORS_ORIGIN_REGEX || ""),
+  allowVercelPreviewOrigins: (process.env.ALLOW_VERCEL_PREVIEW_ORIGINS || "true").toLowerCase() === "true",
   googleClientId: process.env.GOOGLE_CLIENT_ID || "",
   bcryptSaltRounds: Number(process.env.BCRYPT_SALT_ROUNDS) || 10,
   logLevel: process.env.LOG_LEVEL || "info"

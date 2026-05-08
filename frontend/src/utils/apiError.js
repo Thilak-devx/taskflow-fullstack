@@ -8,7 +8,7 @@ export const getApiErrorMessage = (error, fallback = "Something went wrong.") =>
   }
 
   if (error?.code === "ERR_NETWORK") {
-    return "Unable to reach the server. Check your connection and try again.";
+    return "Unable to reach the server. Verify the deployed API URL and backend CORS settings, then try again.";
   }
 
   return fallback;

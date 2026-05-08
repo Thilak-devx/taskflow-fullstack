@@ -150,6 +150,7 @@ BCRYPT_SALT_ROUNDS=10
 CLIENT_URL=http://localhost:5173
 CLIENT_URLS=
 CORS_ORIGIN_REGEX=
+ALLOW_VERCEL_PREVIEW_ORIGINS=true
 GOOGLE_CLIENT_ID=your-google-web-client-id
 LOG_LEVEL=info
 ```
@@ -235,6 +236,7 @@ Recommended backend environment variables:
 - `CLIENT_URL`
 - `CLIENT_URLS`
 - `CORS_ORIGIN_REGEX`
+- `ALLOW_VERCEL_PREVIEW_ORIGINS`
 - `GOOGLE_CLIENT_ID`
 - `BCRYPT_SALT_ROUNDS`
 
@@ -244,6 +246,7 @@ Deployment notes:
 - Start command: `npm start`
 - Swagger docs path: `/api/docs`
 - MongoDB Atlas is the intended production database target
+- For Vercel deployments, set `CLIENT_URL` to your primary production frontend URL and keep `ALLOW_VERCEL_PREVIEW_ORIGINS=true` if you want preview deployments to work without extra CORS changes.
 
 ## Deployment links
 

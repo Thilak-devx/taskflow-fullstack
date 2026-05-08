@@ -12,15 +12,31 @@ const { apiLimiter, authLimiter } = require("./middleware/rateLimitMiddleware");
 
 const app = express();
 
+const isAllowedOrigin = (origin) => {
+  if (!origin) {
+    return true;
+  }
+
+  if (env.clientUrls.includes(origin) || env.corsOriginRegexes.some((pattern) => pattern.test(origin))) {
+    return true;
+  }
+
+  if (!env.allowVercelPreviewOrigins) {
+    return false;
+  }
+
+  try {
+    const parsedOrigin = new URL(origin);
+    return parsedOrigin.protocol === "https:" && parsedOrigin.hostname.endsWith(".vercel.app");
+  } catch (_error) {
+    return false;
+  }
+};
+
 app.use(
   cors({
     origin(origin, callback) {
-      const isAllowedOrigin =
-        !origin ||
-        env.clientUrls.includes(origin) ||
-        env.corsOriginRegexes.some((pattern) => pattern.test(origin));
-
-      if (isAllowedOrigin) {
+      if (isAllowedOrigin(origin)) {
         return callback(null, true);
       }
 
