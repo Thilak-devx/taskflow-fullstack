@@ -1,0 +1,15 @@
+export const getApiErrorMessage = (error, fallback = "Something went wrong.") => {
+  if (error?.response?.data?.errors?.length) {
+    return error.response.data.errors[0].msg || fallback;
+  }
+
+  if (error?.response?.data?.message) {
+    return error.response.data.message;
+  }
+
+  if (error?.code === "ERR_NETWORK") {
+    return "Unable to reach the server. Check your connection and try again.";
+  }
+
+  return fallback;
+};

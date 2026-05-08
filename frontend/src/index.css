@@ -1,0 +1,192 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --page-bg: #020617;
+  --surface: rgba(9, 14, 28, 0.72);
+  --surface-strong: rgba(10, 14, 24, 0.92);
+  --surface-soft: rgba(15, 23, 42, 0.54);
+  --stroke: rgba(148, 163, 184, 0.14);
+  --stroke-strong: rgba(148, 163, 184, 0.2);
+  --text-soft: #94a3b8;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply min-h-screen bg-slate-950 text-slate-100 antialiased;
+  background-image:
+    radial-gradient(circle at 0% 0%, rgba(34, 201, 122, 0.18), transparent 28%),
+    radial-gradient(circle at 100% 0%, rgba(14, 165, 233, 0.16), transparent 24%),
+    radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.04), transparent 22%),
+    linear-gradient(180deg, rgba(5, 10, 22, 0.98), rgba(2, 6, 23, 1));
+}
+
+#root {
+  @apply min-h-screen;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  @apply transition duration-200;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  @apply outline-none ring-2 ring-emerald-400 ring-offset-2 ring-offset-slate-950;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold tracking-[-0.01em] transition duration-200;
+}
+
+.btn:disabled {
+  @apply cursor-not-allowed;
+}
+
+.btn-primary {
+  color: #03130d;
+  background-image: linear-gradient(135deg, #34d399 0%, #2dd4bf 52%, #67e8f9 100%);
+  box-shadow:
+    0 18px 40px rgba(34, 211, 153, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow:
+    0 24px 46px rgba(45, 212, 191, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+  filter: brightness(0.98);
+}
+
+.btn-primary:disabled {
+  color: rgba(2, 6, 23, 0.72);
+  background-image: linear-gradient(135deg, rgba(74, 222, 128, 0.45), rgba(45, 212, 191, 0.38));
+  box-shadow: none;
+  opacity: 0.58;
+}
+
+.btn-secondary {
+  @apply border border-white/10 bg-white/5 text-slate-100;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  @apply border-white/20 bg-white/10;
+  transform: translateY(-1px);
+}
+
+.btn-secondary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-secondary:disabled {
+  @apply bg-white/[0.04] text-slate-500 opacity-60;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.btn-danger {
+  color: white;
+  background-image: linear-gradient(135deg, #fb7185 0%, #ef4444 100%);
+  box-shadow:
+    0 18px 40px rgba(244, 63, 94, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.btn-danger:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+}
+
+.btn-danger:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-danger:disabled {
+  background-image: linear-gradient(135deg, rgba(251, 113, 133, 0.45), rgba(239, 68, 68, 0.4));
+  box-shadow: none;
+  opacity: 0.58;
+}
+
+.task-complete-glow {
+  animation: taskPulse 0.45s ease-out;
+}
+
+.page-fade-in {
+  animation: pageFade 0.38s ease-out;
+}
+
+.modal-pop {
+  animation: modalPop 0.22s ease-out;
+}
+
+.glass-panel {
+  background: linear-gradient(180deg, rgba(12, 18, 32, 0.9), rgba(7, 12, 24, 0.78));
+  border: 1px solid var(--stroke);
+  box-shadow: 0 24px 80px rgba(2, 6, 23, 0.46);
+  backdrop-filter: blur(22px);
+}
+
+.subtle-grid {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: center;
+}
+
+@keyframes taskPulse {
+  0% {
+    transform: scale(0.985);
+    box-shadow: 0 0 0 rgba(16, 185, 129, 0);
+  }
+
+  60% {
+    transform: scale(1);
+    box-shadow: 0 0 40px rgba(16, 185, 129, 0.18);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+@keyframes pageFade {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modalPop {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
