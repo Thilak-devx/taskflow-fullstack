@@ -1,64 +1,73 @@
 # TaskFlow
 
-TaskFlow is a full-stack task management application built as a production-style portfolio project. It combines secure JWT authentication, role-aware task access, account management, Google sign-in support, and a polished dark SaaS interface for a realistic end-to-end product showcase.
+TaskFlow is a production-style full-stack task management application built for portfolio and internship evaluation. It demonstrates practical full-stack engineering across authentication, protected CRUD flows, API design, deployment, validation, and UI quality.
 
-The project is structured as a React + Vite frontend and an Express + MongoDB backend, with clear separation between UI, API, business logic, and persistence layers.
+The project uses a React + Vite frontend and a Node.js + Express + MongoDB backend, with a modular architecture and deployment-ready configuration for Vercel and Render.
 
-## Project overview
+## Live demo
 
-TaskFlow is designed to demonstrate practical full-stack engineering skills rather than just static UI work. It includes real authentication, protected CRUD flows, backend validation, centralized error handling, deployment-ready configuration, and API documentation that can be tested directly through Swagger.
+- Frontend: [https://taskflow-fullstack-xi.vercel.app](https://taskflow-fullstack-xi.vercel.app)
+- Backend: [https://taskflow-fullstack-g80p.onrender.com](https://taskflow-fullstack-g80p.onrender.com)
+- Swagger API docs: [https://taskflow-fullstack-g80p.onrender.com/api/docs](https://taskflow-fullstack-g80p.onrender.com/api/docs)
 
-This makes it suitable for:
+## Overview
 
-- internship submissions
-- recruiter portfolio reviews
-- full-stack project demos
-- API and frontend integration showcases
+TaskFlow is designed to feel like a real SaaS product rather than a basic CRUD demo. It includes:
 
-## Features
+- secure JWT authentication
+- email/password login and Google sign-in support
+- role-aware protected routes
+- task creation, updates, filtering, and status management
+- account settings and password change flows
+- permanent account deletion with owned-task cleanup
+- production-ready backend middleware and API documentation
 
-### Product features
+This repository is intended to showcase:
 
-- Email and password registration/login
-- Google sign-in support
-- Persistent authenticated sessions
-- Role-aware access for `user` and `admin`
-- Task create, read, update, and delete
-- Task search, filtering, and sorting
-- Dashboard metrics and recent activity
-- Profile update and password change
-- Permanent account deletion with cleanup of owned tasks
+- frontend and backend integration
+- secure auth implementation
+- API-first backend design
+- deployment readiness
+- code organization and maintainability
 
-### Backend features
+## Core features
 
-- JWT-based authentication
+### User experience
+
+- Responsive dark SaaS dashboard
+- Persistent login after refresh
+- Toast-based success and error feedback
+- Search, filter, and sort for tasks
+- Modal-based create and edit flows
+- Settings page for profile and security updates
+
+### Authentication and security
+
 - bcrypt password hashing
-- Protected routes and role-based access middleware
-- Request validation with `express-validator`
-- Centralized error handling
-- Swagger API documentation
-- Production-ready CORS and rate limiting
-- Deployment support for Render and Railway
+- JWT-based authentication
+- token invalidation through `tokenVersion`
+- protected API routes
+- role-based access support for `user` and `admin`
+- input validation with `express-validator`
+- `helmet`, rate limiting, and CORS controls
 
-### Frontend features
+### Backend quality
 
-- Responsive React + Vite application
-- Protected routes
-- Toast notifications
-- Persistent auth state after refresh
-- Premium dark UI
-- Modal-based task management flows
-- Account settings UI
+- MVC-inspired modular structure
+- centralized error handling
+- API versioning with `/api/v1`
+- Swagger documentation with request/response examples
+- Render and Railway deployment support
 
 ## Tech stack
 
 ### Frontend
 
-- React
+- React 18
 - Vite
 - Tailwind CSS
-- Axios
 - React Router
+- Axios
 - React Hot Toast
 - Lucide React
 
@@ -66,7 +75,7 @@ This makes it suitable for:
 
 - Node.js
 - Express
-- MongoDB
+- MongoDB Atlas
 - Mongoose
 - JSON Web Token
 - bcryptjs
@@ -75,33 +84,9 @@ This makes it suitable for:
 - express-rate-limit
 - Swagger UI Express
 
-## Authentication flow
+## Architecture
 
-TaskFlow uses JWT-based authentication for both local and Google sign-in flows.
-
-1. A user registers or logs in through the frontend.
-2. The backend validates the request and hashes passwords using `bcryptjs`.
-3. On successful authentication, the backend issues a JWT.
-4. The frontend stores the token and attaches it to protected API requests using the `Authorization: Bearer <token>` header.
-5. Protected backend routes verify the token, load the current user, and enforce role-based access where required.
-6. On password change, the backend increments `tokenVersion`, which invalidates older sessions.
-
-## API documentation
-
-Interactive Swagger documentation is available locally at:
-
-- [http://localhost:5000/api/docs](http://localhost:5000/api/docs)
-
-The docs include:
-
-- authentication routes
-- account routes
-- task CRUD routes
-- JWT authorization support
-- request/response schemas
-- example payloads and status codes
-
-## Folder structure
+The repository is split into independent frontend and backend applications for cleaner development and deployment boundaries.
 
 ```text
 taskflow-project/
@@ -128,10 +113,61 @@ taskflow-project/
       utils/
     .env.example
     package.json
+    vercel.json
   postman/
     TaskFlow.postman_collection.json
   README.md
 ```
+
+## Authentication flow
+
+1. A user registers or logs in from the frontend.
+2. The backend validates the request and hashes local passwords with `bcryptjs`.
+3. On success, the backend returns a signed JWT.
+4. The frontend stores the token and sends it as `Authorization: Bearer <token>`.
+5. Protected routes verify the token, load the active user, and enforce authorization rules.
+6. Password changes increment `tokenVersion`, which invalidates older sessions.
+
+## API documentation
+
+Interactive Swagger documentation is available at:
+
+- Local: [http://localhost:5000/api/docs](http://localhost:5000/api/docs)
+- Production: [https://taskflow-fullstack-g80p.onrender.com/api/docs](https://taskflow-fullstack-g80p.onrender.com/api/docs)
+
+The docs include:
+
+- auth routes
+- account routes
+- task CRUD routes
+- JWT authorization support
+- request schemas
+- response examples
+- status codes
+
+## API summary
+
+### Auth
+
+- `POST /api/v1/auth/register`
+- `POST /api/v1/auth/login`
+- `POST /api/v1/auth/google`
+- `GET /api/v1/auth/me`
+
+### Account
+
+- `GET /api/v1/account/profile`
+- `PATCH /api/v1/account/profile`
+- `POST /api/v1/account/password`
+- `DELETE /api/v1/account`
+
+### Tasks
+
+- `GET /api/v1/tasks`
+- `GET /api/v1/tasks/:id`
+- `POST /api/v1/tasks`
+- `PATCH /api/v1/tasks/:id`
+- `DELETE /api/v1/tasks/:id`
 
 ## Environment variables
 
@@ -168,17 +204,11 @@ VITE_GOOGLE_CLIENT_ID=your-google-web-client-id
 
 ### 1. Install dependencies
 
-Backend:
-
 ```bash
 cd backend
 npm install
-```
 
-Frontend:
-
-```bash
-cd frontend
+cd ../frontend
 npm install
 ```
 
@@ -186,9 +216,9 @@ npm install
 
 - Create `backend/.env`
 - Create `frontend/.env`
-- Add your MongoDB Atlas URI
+- Add your MongoDB Atlas connection string
 - Add a strong JWT secret
-- Add Google client IDs if Google sign-in is enabled
+- Add Google OAuth client IDs if using Google sign-in
 
 ### 3. Start the backend
 
@@ -204,95 +234,77 @@ cd frontend
 npm run dev
 ```
 
-### 5. Open the app
+### 5. Open the application
 
 - Frontend: [http://localhost:5173](http://localhost:5173)
 - Backend: [http://localhost:5000](http://localhost:5000)
 - Swagger docs: [http://localhost:5000/api/docs](http://localhost:5000/api/docs)
 
-## Deployment
-
-### Frontend
-
-Vercel-ready configuration is included in [frontend/vercel.json](C:/Users/2026/Desktop/taskflow-project/frontend/vercel.json).
-
-Recommended frontend environment variables:
-
-- `VITE_API_URL`
-- `VITE_GOOGLE_CLIENT_ID`
+## Scripts
 
 ### Backend
 
-Render starter config is included in [backend/render.yaml](C:/Users/2026/Desktop/taskflow-project/backend/render.yaml).
+- `npm run dev` - start backend with nodemon
+- `npm start` - start backend in production mode
+- `npm run check` - load-check the Express app configuration
 
-Railway config is included in [backend/railway.json](C:/Users/2026/Desktop/taskflow-project/backend/railway.json).
+### Frontend
 
-Recommended backend environment variables:
+- `npm run dev` - start the Vite dev server
+- `npm run build` - create the production build
+- `npm run preview` - preview the production build locally
+
+## Deployment
+
+### Frontend on Vercel
+
+Configuration is included in [frontend/vercel.json](C:/Users/2026/Desktop/taskflow-project/frontend/vercel.json).
+
+Set:
+
+- `VITE_API_URL=https://taskflow-fullstack-g80p.onrender.com/api/v1`
+- `VITE_GOOGLE_CLIENT_ID=your-google-web-client-id`
+
+### Backend on Render
+
+Configuration is included in [backend/render.yaml](C:/Users/2026/Desktop/taskflow-project/backend/render.yaml).
+
+Recommended production variables:
 
 - `NODE_ENV=production`
 - `JWT_SECRET`
-- `JWT_EXPIRES_IN`
+- `JWT_EXPIRES_IN=7d`
 - `MONGO_URI` or `DATABASE_URL`
-- `CLIENT_URL`
-- `CLIENT_URLS`
-- `CORS_ORIGIN_REGEX`
-- `ALLOW_VERCEL_PREVIEW_ORIGINS`
+- `CLIENT_URL=https://taskflow-fullstack-xi.vercel.app`
+- `CLIENT_URLS=https://taskflow-fullstack-xi.vercel.app`
+- `ALLOW_VERCEL_PREVIEW_ORIGINS=true`
 - `GOOGLE_CLIENT_ID`
-- `BCRYPT_SALT_ROUNDS`
+- `BCRYPT_SALT_ROUNDS=10`
 
-Deployment notes:
+Runtime notes:
 
-- Health check path: `/health`
 - Start command: `npm start`
-- Swagger docs path: `/api/docs`
-- MongoDB Atlas is the intended production database target
-- For Vercel deployments, set `CLIENT_URL` to your primary production frontend URL and keep `ALLOW_VERCEL_PREVIEW_ORIGINS=true` if you want preview deployments to work without extra CORS changes.
+- Health check path: `/health`
+- API docs path: `/api/docs`
 
-## Deployment links
+### Backend on Railway
 
-Deployment configs included in the repository:
+Configuration is included in [backend/railway.json](C:/Users/2026/Desktop/taskflow-project/backend/railway.json).
 
-- Render config: [backend/render.yaml](C:/Users/2026/Desktop/taskflow-project/backend/render.yaml)
-- Railway config: [backend/railway.json](C:/Users/2026/Desktop/taskflow-project/backend/railway.json)
-- Vercel frontend config: [frontend/vercel.json](C:/Users/2026/Desktop/taskflow-project/frontend/vercel.json)
-
-## Scalability notes
+## Scalability
 
 TaskFlow is structured with scalability in mind:
 
 - The backend uses a modular architecture with separate controllers, services, middleware, models, and utilities.
-- API versioning through `/api/v1` allows future iteration without breaking existing clients.
-- JWT-based authentication supports stateless request handling and is well suited for horizontally scaled deployments.
-- The frontend and backend are separated into independent applications, which makes scaling and deployment more flexible.
-- The current structure is ready for future additions such as Redis caching, queue-based jobs, or background workers.
-- Deployment configs for Vercel, Render, and Railway make the project easy to move from local development to production hosting.
+- API versioning through `/api/v1` supports future iteration without breaking existing clients.
+- JWT-based authentication allows stateless request handling and supports horizontal scaling.
+- The frontend and backend are deployed independently, which keeps scaling and release workflows flexible.
+- The current architecture can be extended with Redis caching, queues, and background workers as the product grows.
+- Deployment configuration for Vercel, Render, and Railway makes the project easy to move from local development to production hosting.
 
-## API summary
+## Reviewer notes
 
-### Auth
-
-- `POST /api/v1/auth/register`
-- `POST /api/v1/auth/login`
-- `POST /api/v1/auth/google`
-- `GET /api/v1/auth/me`
-
-### Account
-
-- `GET /api/v1/account/profile`
-- `PATCH /api/v1/account/profile`
-- `POST /api/v1/account/password`
-- `DELETE /api/v1/account`
-
-### Tasks
-
-- `GET /api/v1/tasks`
-- `GET /api/v1/tasks/:id`
-- `POST /api/v1/tasks`
-- `PATCH /api/v1/tasks/:id`
-- `DELETE /api/v1/tasks/:id`
-
-## Notes for reviewers
-
-- The backend is production-ready for MongoDB deployments.
-- Swagger docs can be used to test the API without needing the frontend.
-- The project demonstrates full-stack implementation quality across UI, API design, auth, validation, deployment, and developer experience.
+- Swagger docs can be used to test the backend without running the frontend.
+- The backend returns consistent JSON success and error payloads.
+- Local development and production deployment use the same API structure.
+- The project emphasizes practical engineering quality, not only visual polish.
