@@ -35,6 +35,14 @@ This repository is intended to showcase:
 - deployment readiness
 - code organization and maintainability
 
+## Repository quality
+
+- No local `.env` files are tracked in Git
+- `node_modules` and frontend build output are ignored
+- Backend and frontend are separated into clean deployment units
+- Swagger and Postman are both included for API evaluation
+- Live production links are documented for quick reviewer access
+
 ## Core features
 
 ### User experience
@@ -149,6 +157,12 @@ The docs include:
 - request schemas
 - response examples
 - status codes
+
+Postman collection:
+
+- [postman/TaskFlow.postman_collection.json](C:/Users/2026/Desktop/taskflow-project/postman/TaskFlow.postman_collection.json)
+- Default local base URL: `http://localhost:5000/api/v1`
+- Production base URL: `https://taskflow-fullstack-g80p.onrender.com/api/v1`
 
 ## API summary
 
@@ -333,6 +347,11 @@ Backend environment variables:
 - `BCRYPT_SALT_ROUNDS`
 - `LOG_LEVEL`
 
+Reviewer note:
+
+- For local testing, keep `baseUrl=http://localhost:5000/api/v1` in Postman.
+- For deployed API testing, switch to `productionBaseUrl=https://taskflow-fullstack-g80p.onrender.com/api/v1`.
+
 ### Backend on Railway
 
 Configuration is included in [backend/railway.json](C:/Users/2026/Desktop/taskflow-project/backend/railway.json).
@@ -351,6 +370,7 @@ TaskFlow is structured with scalability in mind:
 ## Reviewer notes
 
 - Swagger docs can be used to test the backend without running the frontend.
+- A complete Postman collection is included for manual API review.
 - The backend returns consistent JSON success and error payloads.
 - Local development and production deployment use the same API structure.
 - The project emphasizes practical engineering quality, not only visual polish.

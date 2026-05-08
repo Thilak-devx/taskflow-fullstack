@@ -2,7 +2,7 @@
   "info": {
     "name": "TaskFlow API",
     "_postman_id": "7b5c8b6d-9e74-4eb2-9a12-5f4c9f5f2026",
-    "description": "TaskFlow authentication, account, and task endpoints.",
+    "description": "Production-ready TaskFlow API collection covering authentication, account management, and task CRUD flows.\n\nSuggested reviewer flow:\n1. Register\n2. Copy token into the collection variable\n3. Test protected task and account routes",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -21,7 +21,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Postman User\",\n  \"email\": \"postman@example.com\",\n  \"password\": \"SecurePass123\",\n  \"role\": \"user\"\n}"
+              "raw": "{\n  \"name\": \"Postman User\",\n  \"email\": \"postman@example.com\",\n  \"password\": \"SecurePass123!\"\n}"
             },
             "url": "{{baseUrl}}/auth/register"
           }
@@ -38,7 +38,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"postman@example.com\",\n  \"password\": \"SecurePass123\"\n}"
+              "raw": "{\n  \"email\": \"postman@example.com\",\n  \"password\": \"SecurePass123!\"\n}"
             },
             "url": "{{baseUrl}}/auth/login"
           }
@@ -71,7 +71,7 @@
                 "value": "Bearer {{token}}"
               }
             ],
-            "url": "{{baseUrl}}/tasks"
+            "url": "{{baseUrl}}/tasks?search=&status=all&priority=all&sort=newest"
           }
         },
         {
@@ -90,9 +90,56 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"title\": \"Postman Task\",\n  \"description\": \"Created from Postman\",\n  \"status\": \"todo\",\n  \"priority\": \"medium\"\n}"
+              "raw": "{\n  \"title\": \"Postman Task\",\n  \"description\": \"Created from Postman for API verification.\",\n  \"status\": \"todo\",\n  \"priority\": \"medium\"\n}"
             },
             "url": "{{baseUrl}}/tasks"
+          }
+        },
+        {
+          "name": "Get Task By Id",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/tasks/{{taskId}}"
+          }
+        },
+        {
+          "name": "Update Task",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"completed\",\n  \"priority\": \"high\"\n}"
+            },
+            "url": "{{baseUrl}}/tasks/{{taskId}}"
+          }
+        },
+        {
+          "name": "Delete Task",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/tasks/{{taskId}}"
           }
         }
       ]
@@ -101,7 +148,7 @@
       "name": "Account",
       "item": [
         {
-          "name": "Profile",
+          "name": "Get Profile",
           "request": {
             "method": "GET",
             "header": [
@@ -111,6 +158,69 @@
               }
             ],
             "url": "{{baseUrl}}/account/profile"
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Postman Reviewer\"\n}"
+            },
+            "url": "{{baseUrl}}/account/profile"
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currentPassword\": \"SecurePass123!\",\n  \"newPassword\": \"SecurePass456!\"\n}"
+            },
+            "url": "{{baseUrl}}/account/password"
+          }
+        },
+        {
+          "name": "Delete Account",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"confirmation\": \"DELETE\"\n}"
+            },
+            "url": "{{baseUrl}}/account"
           }
         }
       ]
@@ -122,7 +232,15 @@
       "value": "http://localhost:5000/api/v1"
     },
     {
+      "key": "productionBaseUrl",
+      "value": "https://taskflow-fullstack-g80p.onrender.com/api/v1"
+    },
+    {
       "key": "token",
+      "value": ""
+    },
+    {
+      "key": "taskId",
       "value": ""
     }
   ]

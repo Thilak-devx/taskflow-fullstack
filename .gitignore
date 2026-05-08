@@ -3,4 +3,9 @@ backend/.env
 frontend/node_modules/
 frontend/.env
 frontend/dist/
+node_modules/
+.vercel/
+.DS_Store
+*.local
+coverage/
 npm-debug.log*
