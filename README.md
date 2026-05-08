@@ -1,14 +1,19 @@
 # TaskFlow
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-111827?style=for-the-badge&logo=vercel&logoColor=white)](https://taskflow-fullstack-xi.vercel.app)
+[![Backend API](https://img.shields.io/badge/Backend%20API-Render-1f2937?style=for-the-badge&logo=render&logoColor=white)](https://taskflow-fullstack-g80p.onrender.com/api/docs)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-0f172a?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Thilak-devx/taskflow-fullstack)
+
 TaskFlow is a production-style full-stack task management application built for portfolio and internship evaluation. It demonstrates practical full-stack engineering across authentication, protected CRUD flows, API design, deployment, validation, and UI quality.
 
 The project uses a React + Vite frontend and a Node.js + Express + MongoDB backend, with a modular architecture and deployment-ready configuration for Vercel and Render.
 
-## Live demo
+## Live Demo & Deployment
 
-- Frontend: [https://taskflow-fullstack-xi.vercel.app](https://taskflow-fullstack-xi.vercel.app)
-- Backend: [https://taskflow-fullstack-g80p.onrender.com](https://taskflow-fullstack-g80p.onrender.com)
+- Frontend live URL: [https://taskflow-fullstack-xi.vercel.app](https://taskflow-fullstack-xi.vercel.app)
+- Backend API live URL: [https://taskflow-fullstack-g80p.onrender.com](https://taskflow-fullstack-g80p.onrender.com)
 - Swagger API docs: [https://taskflow-fullstack-g80p.onrender.com/api/docs](https://taskflow-fullstack-g80p.onrender.com/api/docs)
+- GitHub repository: [https://github.com/Thilak-devx/taskflow-fullstack](https://github.com/Thilak-devx/taskflow-fullstack)
 
 ## Overview
 
@@ -254,11 +259,26 @@ npm run dev
 - `npm run build` - create the production build
 - `npm run preview` - preview the production build locally
 
-## Deployment
+## Deployment Architecture
+
+TaskFlow is deployed as a separated full-stack system:
+
+- Frontend hosted on Vercel for fast static delivery and client-side routing support
+- Backend hosted on Render as a Node.js web service exposing the REST API
+- MongoDB Atlas used as the managed cloud database for persistent application data
+
+This separation keeps frontend delivery, backend compute, and database persistence independently scalable and easier to manage in production.
+
+## Production Deployment
 
 ### Frontend on Vercel
 
 Configuration is included in [frontend/vercel.json](C:/Users/2026/Desktop/taskflow-project/frontend/vercel.json).
+
+Production frontend:
+
+- URL: [https://taskflow-fullstack-xi.vercel.app](https://taskflow-fullstack-xi.vercel.app)
+- Hosting: Vercel
 
 Set:
 
@@ -268,6 +288,11 @@ Set:
 ### Backend on Render
 
 Configuration is included in [backend/render.yaml](C:/Users/2026/Desktop/taskflow-project/backend/render.yaml).
+
+Production backend:
+
+- URL: [https://taskflow-fullstack-g80p.onrender.com](https://taskflow-fullstack-g80p.onrender.com)
+- Hosting: Render
 
 Recommended production variables:
 
@@ -286,6 +311,27 @@ Runtime notes:
 - Start command: `npm start`
 - Health check path: `/health`
 - API docs path: `/api/docs`
+
+### Environment variables overview
+
+Frontend environment variables:
+
+- `VITE_API_URL`
+- `VITE_GOOGLE_CLIENT_ID`
+
+Backend environment variables:
+
+- `NODE_ENV`
+- `JWT_SECRET`
+- `JWT_EXPIRES_IN`
+- `MONGO_URI` or `DATABASE_URL`
+- `CLIENT_URL`
+- `CLIENT_URLS`
+- `CORS_ORIGIN_REGEX`
+- `ALLOW_VERCEL_PREVIEW_ORIGINS`
+- `GOOGLE_CLIENT_ID`
+- `BCRYPT_SALT_ROUNDS`
+- `LOG_LEVEL`
 
 ### Backend on Railway
 
